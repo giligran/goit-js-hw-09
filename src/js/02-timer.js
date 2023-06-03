@@ -36,34 +36,43 @@ const timer = {
   },
   timerInterval (selectedDates) {
     const today = new Date();
-    const interval = selectedDates[0]-today;
-    if (interval<=0) {
-      Notiflix.Notify.failure('Please choose a date in the future');
-      return
-    }
-    this.viewTimer(interval)
-    btnStart.disabled = false;
-    this.interval = interval;
+  this.interval = selectedDates[0] - today;
+
+  if (this.interval <= 0) {
+    Notiflix.Notify.failure('Please choose a date in the future');
+    return;
+  }
+
+  btnStart.disabled = false;
+  this.startTimer();
   },
-  viewTimer(interval) {
-    const { days, hours, minutes, seconds } = this.convertMs(interval);
+  viewTimer(remainingTime) {
+    const { days, hours, minutes, seconds } = this.convertMs(remainingTime);
     daysField.textContent = `${days}`.padStart(2,'0');
     hoursField.textContent = `${hours}`.padStart(2,'0');
     minutesField.textContent = `${minutes}`.padStart(2,'0');
     secondsField.textContent = `${seconds}`.padStart(2,'0');
   },
   startTimer() {
-    this.intervalId=setInterval(()=>{
-      this.interval-=1000;
-      
-      if (this.interval <= 0) {
+    const startTime = performance.now();
+
+    const animate = () => {
+      const currentTime = performance.now();
+      const elapsedTime = currentTime - startTime;
+      const remainingTime = this.interval - elapsedTime;
+  
+      if (remainingTime <= 0) {
         clearInterval(this.intervalId);
         Notiflix.Notify.success('Timer is over');
-        inputDate.disabled=false;
+        inputDate.disabled = false;
         return;
       }
-      this.viewTimer(this.interval);
-    }, 1000)
+  
+      this.viewTimer(remainingTime);
+      requestAnimationFrame(animate);
+    };
+  
+    this.intervalId = requestAnimationFrame(animate);
   }
 }
 
