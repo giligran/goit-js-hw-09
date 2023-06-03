@@ -1,6 +1,4 @@
-// Описаний в документації
 import flatpickr from "flatpickr";
-// Додатковий імпорт стилів
 import "flatpickr/dist/flatpickr.min.css";
 import Notiflix from 'notiflix';
 
@@ -13,7 +11,6 @@ const secondsField = document.querySelector('span[data-seconds]');
 
 btnStart.disabled = true;
 const timer = {
-  // interval: null,
   intervalId: null,
   options: {
     enableTime: true,
@@ -25,19 +22,14 @@ const timer = {
     }
   },
   convertMs(ms) {
-    // Number of milliseconds per unit of time
     const second = 1000;
     const minute = second * 60;
     const hour = minute * 60;
     const day = hour * 24;
   
-    // Remaining days
     const days = Math.floor(ms / day);
-    // Remaining hours
     const hours = Math.floor((ms % day) / hour);
-    // Remaining minutes
     const minutes = Math.floor(((ms % day) % hour) / minute);
-    // Remaining seconds
     const seconds = Math.floor((((ms % day) % hour) % minute) / second);
   
     return { days, hours, minutes, seconds };
@@ -55,10 +47,10 @@ const timer = {
   },
   viewTimer(interval) {
     const { days, hours, minutes, seconds } = this.convertMs(interval);
-    daysField.textContent = days.toString().padStart(2,'0');
-    hoursField.textContent = hours.toString().padStart(2,'0');
-    minutesField.textContent = minutes.toString().padStart(2,'0');
-    secondsField.textContent = seconds.toString().padStart(2,'0');
+    daysField.textContent = `${days}`.padStart(2,'0');
+    hoursField.textContent = `${hours}`.padStart(2,'0');
+    minutesField.textContent = `${minutes}`.padStart(2,'0');
+    secondsField.textContent = `${seconds}`.padStart(2,'0');
   },
   startTimer() {
     this.intervalId=setInterval(()=>{
