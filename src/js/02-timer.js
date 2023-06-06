@@ -44,7 +44,7 @@ const timer = {
   }
 
   btnStart.disabled = false;
-  this.startTimer();
+//   this.startTimer();
   },
   viewTimer(remainingTime) {
     const { days, hours, minutes, seconds } = this.convertMs(remainingTime);
