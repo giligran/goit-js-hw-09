@@ -44,6 +44,7 @@ const timer = {
   }
 
   btnStart.disabled = false;
+    this.viewTimer();
 //   this.startTimer();
   },
   viewTimer(remainingTime) {
